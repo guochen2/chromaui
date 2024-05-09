@@ -1,0 +1,139 @@
+// app global css in SCSS form
+/* 字体大小全局样式
+------------------------------- */
+@for $i from 10 through 100 {
+  .font#{$i} {
+    font-size: #{$i}px !important;
+  }
+  .lh#{$i} {
+    line-height: #{$i}px !important;
+  }
+}
+
+/* 外边距、内边距全局样式
+  ------------------------------- */
+@for $i from 1 through 200 {
+  .mt#{$i} {
+    margin-top: #{$i}px !important;
+  }
+  .mr#{$i} {
+    margin-right: #{$i}px !important;
+  }
+  .mb#{$i} {
+    margin-bottom: #{$i}px !important;
+  }
+  .ml#{$i} {
+    margin-left: #{$i}px !important;
+  }
+  .pt#{$i} {
+    padding-top: #{$i}px !important;
+  }
+  .pr#{$i} {
+    padding-right: #{$i}px !important;
+  }
+  .pb#{$i} {
+    padding-bottom: #{$i}px !important;
+  }
+  .pl#{$i} {
+    padding-left: #{$i}px !important;
+  }
+  .t#{$i} {
+    top: #{$i}px !important;
+  }
+  .z#{$i} {
+    z-index: #{$i} !important;
+  }
+}
+
+.tr {
+  text-align: right;
+}
+.tc {
+  text-align: center;
+}
+.weight {
+  font-weight: bolder;
+}
+.el-main {
+  margin-top: -125px;
+}
+.bh-main {
+  margin-top: 125px;
+}
+.tips {
+  color: var(--next-color-tips);
+}
+.tips-c {
+  color: var(--next-color-tips-c);
+}
+.cprimary {
+  color: var(--el-color-primary);
+}
+.s_input .el-input__wrapper {
+  border-radius: 30px;
+}
+.header_se_pi {
+  margin-top: 127px !important;
+}
+.bgb {
+  background-color: #fff;
+}
+.bgb-a {
+  background-color: #f5f7fa;
+}
+.cp {
+  cursor: pointer;
+}
+
+.ac_fd {
+  transition: transform 0.5s;
+}
+.ac_fd:hover {
+  transform: scale(1.2, 1.2);
+  transition: transform 0.5s;
+}
+.ma {
+  margin: auto;
+}
+.required {
+  color: red;
+}
+.f400 {
+  font-weight: 400;
+}
+
+@for $i from 1 through 200 {
+  .w#{$i} {
+    width: #{$i}#{'%'} !important;
+  }
+  .mlb#{$i} {
+    margin-left: #{$i}#{'%'} !important;
+  }
+  .h#{$i} {
+    height: #{$i}#{'%'} !important;
+  }
+  .br#{$i} {
+    border-radius: #{$i}#{'px'};
+  }
+  .ww#{$i} {
+    width: #{$i}#{'px'} !important;
+  }
+  .hh#{$i} {
+    height: #{$i}#{'px'} !important;
+  }
+}
+.ovh {
+  overflow: hidden;
+}
+.textc {
+  text-align: center;
+}
+.ma {
+  margin: auto;
+}
+.custombody {
+  margin: auto;
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  width: 1400px;
+}
