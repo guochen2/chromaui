@@ -15,6 +15,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.4",
     "axios": "^1.2.1",
+    "clipboard": "^2.0.11",
     "crypto-js": "^4.2.0",
     "electron": "^30.0.2",
     "linq": "^4.0.2",
@@ -22,7 +23,8 @@
     "quasar": "^2.16.0",
     "sweetalert2": "^11.10.8",
     "vue": "^3.4.18",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue3-json-viewer": "^2.2.2"
   },
   "devDependencies": {
     "@electron/packager": "^18.3.2",

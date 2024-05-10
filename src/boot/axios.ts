@@ -4,6 +4,8 @@ import * as Message from '../components/Message';
 import * as Loading from '../components/Loading';
 import '../components/extensions';
 import * as util from '../utils/util';
+import JsonViewer from 'vue3-json-viewer';
+import 'vue3-json-viewer/dist/index.css';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -54,6 +56,7 @@ declare global {
 const api = axios.create({ baseURL: 'https://api.example.com' });
 
 export default boot(({ app }) => {
+  app.use(JsonViewer);
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios;

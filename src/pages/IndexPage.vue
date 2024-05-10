@@ -25,8 +25,15 @@
     </div>
     <div class="row justify-evenly">
       <div class="mt10 mb20" v-for="(d, i) in allCon" :key="i">
-        <q-btn no-caps @click="goCon(d)">{{ d.url }}</q-btn
-        ><q-btn class="ml5" icon="delete" @click="removeCon(d)"></q-btn>
+        <q-btn no-caps @click="goCon(d)" color="primary">{{ d.url }}</q-btn
+        ><q-btn
+          class="ml5"
+          round
+          size="xs"
+          color="red"
+          icon="delete"
+          @click="removeCon(d)"
+        ></q-btn>
       </div>
     </div>
   </q-page>
