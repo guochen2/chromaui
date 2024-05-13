@@ -9,8 +9,12 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 const { configure } = require('quasar/wrappers');
+const {
+  vitePluginSwaggerTypescriptApi,
+} = require('vite-plugin-swagger-typescript-api');
+const { resolve } = require('path');
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
@@ -64,18 +68,28 @@ module.exports = configure(function (/* ctx */) {
       // viteVuePluginOptions: {},
 
       vitePlugins: [
-        [
-          'vite-plugin-checker',
-          {
-            vueTsc: {
-              tsconfigPath: 'tsconfig.vue-tsc.json',
-            },
-            eslint: {
-              lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
-            },
-          },
-          { server: false },
-        ],
+        ctx.targetName == 'ios'
+          ? [
+              vitePluginSwaggerTypescriptApi({
+                name: 'baseApi.ts',
+                output: resolve('./src/api-services'),
+                unwrapResponseData: true,
+                url: 'http://127.0.0.1:7900/openapi.json', // 如果从远程接口载入
+                httpClientType: 'axios',
+              }),
+            ]
+          : [
+              'vite-plugin-checker',
+              {
+                vueTsc: {
+                  tsconfigPath: 'tsconfig.vue-tsc.json',
+                },
+                eslint: {
+                  lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+                },
+              },
+              { server: false },
+            ],
       ],
     },
 

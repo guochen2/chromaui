@@ -76,12 +76,6 @@
 import _ from 'lodash';
 import sha256 from 'crypto-js/sha256';
 import {
-  getApiV1CollectionsByCollectionIdCount,
-  getApiV1CollectionsByCollectionName,
-  postApiV1CollectionsByCollectionIdDelete,
-  postApiV1CollectionsByCollectionIdGet,
-} from 'src/server/controller';
-import {
   ref,
   onMounted,
   getCurrentInstance,
@@ -91,6 +85,7 @@ import {
 } from 'vue';
 import { useQuasar } from 'quasar';
 import Enumerable from 'linq';
+import { BaseAxios } from 'src/api-services/baseAxios';
 const unfold = ref(false);
 const jsonDialog = ref(false);
 const proxy = (getCurrentInstance() as ComponentInternalInstance).proxy;
@@ -148,15 +143,21 @@ async function getData() {
   if (!cuCon.value) return;
   proxy?.$loading.show();
   let offset = (pagination.value.page - 1) * pagination.value.rowsPerPage;
-  const res = (await postApiV1CollectionsByCollectionIdGet(
-    { collection_id: cuCon.value.id },
+  const res = (await new BaseAxios(prop.url as string).api.api.get(
+    cuCon.value.id,
     {
-      include: ['documents', 'metadatas'],
-      offset: offset,
-      limit: pagination.value.rowsPerPage,
-    },
-    { baseURL: prop.url }
+      body: {
+        include: ['documents', 'metadatas'],
+        offset: offset,
+        limit: pagination.value.rowsPerPage,
+      },
+    } as any
   )) as any;
+  proxy?.$loading.hide();
+  if (res.status != 1) {
+    proxy?.$message.failtip(res.message);
+    return;
+  }
   let arr = [];
   for (let i = 0; i < res.data.ids.length; i++) {
     arr.push({
@@ -166,15 +167,19 @@ async function getData() {
     });
   }
   await getTotal();
-  proxy?.$loading.hide();
   rows.value = arr;
 }
 async function getTotal() {
-  let res = await getApiV1CollectionsByCollectionIdCount(
-    { collection_id: cuCon.value.id },
-    { baseURL: prop.url }
-  );
-  pagination.value.rowsNumber = res.data as number;
+  proxy?.$loading.show();
+  let res = (await new BaseAxios(prop.url as string).api.api.count(
+    cuCon.value.id
+  )) as any;
+  if (res.status == 1) {
+    pagination.value.rowsNumber = res.data as number;
+  } else {
+    proxy?.$message.failtip(res.message);
+  }
+  proxy?.$loading.hide();
 }
 
 onMounted(() => {
@@ -212,12 +217,9 @@ const removeRow = (row: any) => {
     persistent: true,
   }).onOk(async () => {
     proxy?.$loading.show();
-    let res = await postApiV1CollectionsByCollectionIdDelete(
-      {
-        collection_id: cuCon.value.id,
-      },
-      { ids: [row['id']] },
-      { baseURL: prop.url }
+    let res = await new BaseAxios(prop.url as string).api.api.delete(
+      cuCon.value.id,
+      { body: { ids: [row['id']] } } as any
     );
     proxy?.$loading.hide();
     getData();

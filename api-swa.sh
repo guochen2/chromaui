@@ -1,0 +1,1 @@
+copy ../doc/web-ext/request.js ./node_modules/swagger-typescript-api/src/util/

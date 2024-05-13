@@ -16,9 +16,9 @@
 </template>
 <script setup>
 import { getCurrentInstance, onMounted, ref, nextTick } from 'vue';
-import { getApiV1Collections, getApiV1Version } from 'src/server/controller';
 import VChromaColPage from './ChromaColPage.vue';
 import VChromaColTablePage from './ChromaColTablePage.vue';
+import { BaseAxios } from 'src/api-services/baseAxios';
 
 onMounted(() => {
   Init();
@@ -35,10 +35,16 @@ const Init = async () => {
   if (!baseUrl.value) return;
   conList.value = [];
   proxy.$loading.show();
-  let d = await getApiV1Version(baseConfig);
-  proxy.$message.successtip(d.data);
-  let collectres = await getApiV1Collections({}, baseConfig);
-  conList.value = collectres.data;
+  let res = await new BaseAxios(baseUrl.value).api.api.version();
+  if (res.status == 1) {
+    proxy.$message.successtip(res.data);
+    let collectres = await new BaseAxios(
+      baseUrl.value
+    ).api.api.listCollections();
+    conList.value = collectres.data;
+  } else {
+    proxy.$message.failtip(res.message);
+  }
   proxy.$loading.hide();
 };
 const changeCon = (con) => {
