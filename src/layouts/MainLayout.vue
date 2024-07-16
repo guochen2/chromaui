@@ -8,6 +8,7 @@
           </q-avatar>
           ChromaUI
         </q-toolbar-title>
+        v{{ version }}
       </q-toolbar>
 
       <q-tabs align="left">
@@ -21,3 +22,8 @@
     </q-page-container>
   </q-layout>
 </template>
+<script lang="ts" setup>
+import config from '../../package.json';
+import { ref } from 'vue';
+const version = ref(config.version);
+</script>

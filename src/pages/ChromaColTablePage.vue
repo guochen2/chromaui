@@ -181,7 +181,10 @@ async function getTotal() {
   }
   proxy?.$loading.hide();
 }
-
+function reset() {
+  pagination.value.rowsNumber = 0;
+  rows.value = [];
+}
 onMounted(() => {
   pagination.value.page = 1;
   // get initial data from server (1st page)
@@ -239,5 +242,5 @@ const copy = (d: any) => {
   navigator.clipboard.writeText(JSON.stringify(d));
   proxy?.$message.successtip('已复制到剪贴板');
 };
-defineExpose({ changeCon });
+defineExpose({ changeCon, reset });
 </script>
